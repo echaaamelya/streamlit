@@ -59,8 +59,6 @@ fig = plot_model_accuracies(results)
 st.pyplot(fig)
 
 # Model comparison
-st.header("Perbandingan Model")
-
 results = model_comparison_results()
 
 # Menampilkan metrik evaluasi Logistic Regression
