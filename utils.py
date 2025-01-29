@@ -35,10 +35,9 @@ def generate_wordcloud(data, sentiment, colormap):
 def plot_sentiment_counts(sentiment_counts, ax):
     bars = ax.bar(sentiment_counts.index, sentiment_counts.values, color=['#0077b6', 'orange', '#C5ADED'])
     ax.set_title("Jumlah Analisis Sentimen", fontsize=14, pad=20)
-    ax.set_xlabel("Class Sentiment", fontsize=12)
+    ax.set_xlabel("Kelas Sentimen", fontsize=12)
     ax.set_ylabel("Jumlah", fontsize=12)
     
-    # Add value labels on top of each bar
     for bar in bars:
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width()/2., height,
@@ -46,10 +45,8 @@ def plot_sentiment_counts(sentiment_counts, ax):
                 ha='center', va='bottom', fontsize=12)
 
 def plot_class_metrics(y_true, y_pred):
-    """Plot precision, recall, and F1 for each class with value labels."""
     report = classification_report(y_true, y_pred, output_dict=True)
     
-    # Extract metrics for each class
     classes = ['positif', 'netral', 'negatif']
     metrics = {
         'Precision': [report[cls]['precision'] for cls in classes],
@@ -57,26 +54,24 @@ def plot_class_metrics(y_true, y_pred):
         'F1-score': [report[cls]['f1-score'] for cls in classes]
     }
     
-    # Create plot
+    # Plot
     fig, ax = plt.subplots(figsize=(12, 6))
-    x = np.arange(len(classes))  # class labels
-    width = 0.25  # width of each bar
+    x = np.arange(len(classes)) 
+    width = 0.25  
     
-    # Create bars for each metric
+    # matrix
     bars = []
     for i, (metric_name, values) in enumerate(metrics.items()):
         bar = ax.bar(x + (i * width), values, width, label=metric_name)
         bars.append(bar)
         
-        # Add value labels on top
         for rect in bar:
             height = rect.get_height()
             ax.text(rect.get_x() + rect.get_width()/2., height,
                     f'{height:.2%}',
                     ha='center', va='bottom')
-
-    # Customize plot
-    ax.set_title('Classification Metrics per Class', fontsize=16)
+            
+    ax.set_title('Klasifikasi Matrix per kelas', fontsize=16)
     ax.set_xticks(x + width)
     ax.set_xticklabels(classes)
     ax.set_ylabel('Score', fontsize=12)
@@ -85,8 +80,7 @@ def plot_class_metrics(y_true, y_pred):
     
     return fig
 
-def train_model(data):
-    """Train Logistic Regression and return test data & predictions"""
+def train_model(data): 
     X = data['steming_data']
     y = data['sentiment']
     
